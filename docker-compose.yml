@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  php:
+    build:
+      context: ./docker/php
+    image: esavich/pvmes-php:latest
+    volumes:
+    - ./api:/var/www/api
+
+  node:
+    build:
+      context: ./docker/node
+    image: esavich/pvmes-node:latest
+    volumes:
+    - ./ui:/app
+  #    ports:
+  #    - 8081:8081
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    image: esavich/pvmes-nginx:latest
+    volumes:
+    - ./ui/dist:/var/www/ui/public
+    - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+    - 8080:80
+
+
+  mongo:
+    image: mongo:4.0.3
+    ports:
+    - 27017:27017
+    volumes:
+      - ./mongodata:/data/db
+
