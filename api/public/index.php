@@ -1,8 +1,10 @@
 <?php
 
+use App\ActionRunner\ActionNotFoundException;
 use App\ActionRunner\Runner;
 use App\Actions\PostsAction;
 use App\Actions\SinglePostAction;
+use App\Router\RouteNotFoundException;
 use App\Router\RoutesCollection;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
@@ -35,7 +37,7 @@ $actionRunner = new Runner();
 try {
     $routeResult = $router->match();
     $response = $actionRunner->run($routeResult);
-} catch (\App\Router\RouteNotFoundException $e) {
+} catch (RouteNotFoundException $e) {
     $response = [
         'status' => 'error',
         'code' => '404',
@@ -44,6 +46,12 @@ try {
             'uri' => $e->getUri(),
             'method' => $e->getMethod()
         ]
+    ];
+} catch (ActionNotFoundException $e) {
+    $response = [
+        'status' => 'error',
+        'code' => '404',
+        'data' => $e->getMessage(),
     ];
 }
 header('Content-Type: application/json');

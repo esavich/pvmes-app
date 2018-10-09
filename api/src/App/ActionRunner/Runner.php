@@ -14,7 +14,7 @@ class Runner
             if (class_exists($handler)) {
                 $handler = [new $handler, 'run'];
             } else {
-                throw new ActionNotFoundException();
+                throw new ActionNotFoundException('action ' . $handler . ' not found');
             }
         }
         return call_user_func_array($handler, $result->getArgs());
