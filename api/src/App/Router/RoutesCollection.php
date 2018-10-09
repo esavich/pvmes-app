@@ -13,7 +13,7 @@ class RoutesCollection
      * @param array $methods
      * @param array $tokens
      */
-    public function addRoute($pattern, callable $handler, array $methods = [], array $tokens = []): void
+    public function addRoute($pattern, $handler, array $methods = [], array $tokens = []): void
     {
         $this->routes[] = [
             'pattern' => $pattern,

@@ -9,7 +9,14 @@ class HandlerRunner
 {
     public function run(Result $result)
     {
-
-        return call_user_func_array($result->getHandler(), $result->getArgs());
+        $handler = $result->getHandler();
+        if (!is_callable($handler) && is_string($handler)) {
+            if (class_exists($handler)) {
+                $handler = [new $handler, 'run'];
+            } else {
+                throw new HandlerNotFoundException();
+            }
+        }
+        return call_user_func_array($handler, $result->getArgs());
     }
 }

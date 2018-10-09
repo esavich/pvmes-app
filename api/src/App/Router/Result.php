@@ -10,10 +10,10 @@ class Result
 
     /**
      * Result constructor.
-     * @param callable $handler
+     * @param $handler
      * @param array $args
      */
-    public function __construct(callable $handler, array $args)
+    public function __construct($handler, array $args)
     {
         $this->handler = $handler;
         $this->args = $args;

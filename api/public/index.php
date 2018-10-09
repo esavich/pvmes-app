@@ -1,6 +1,8 @@
 <?php
 
 use App\HandlerRunner\HandlerRunner;
+use App\Handlers\PostsAction;
+use App\Handlers\SinglePostAction;
 use App\Router\RoutesCollection;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
@@ -23,22 +25,9 @@ $routesCollection->addRoute('/api/', function () {
     ];
 }, ['POST']);
 
-$routesCollection->addRoute('/api/posts/', function () {
+$routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
 
-    return [
-        'data' => ['request' => 'GET /api/posts']
-    ];
-}, ['GET']);
-
-$routesCollection->addRoute('/api/posts/{id}/', function ($id) {
-
-    return [
-        'data' => [
-            'request' => $_SERVER['REQUEST_METHOD'] . ' /api/posts',
-            'id' => $id
-        ]
-    ];
-}, ['GET', 'POST'], ['id' => '\d']);
+$routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET', 'POST'], ['id' => '\d']);
 
 $router = new \App\Router\Router($routesCollection);
 
