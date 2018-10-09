@@ -47,7 +47,15 @@ try {
     $routeResult = $router->match();
     $response = $handlerRunner->run($routeResult);
 } catch (\App\Router\RouteNotFoundException $e) {
-    $response = ['status' => 'error', 'code' => '404', 'data' => $e->getMessage()];
+    $response = [
+        'status' => 'error',
+        'code' => '404',
+        'data' => $e->getMessage(),
+        'request' => [
+            'uri' => $e->getUri(),
+            'method' => $e->getMethod()
+        ]
+    ];
 }
 header('Content-Type: application/json');
 echo json_encode($response);

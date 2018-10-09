@@ -25,6 +25,7 @@ class Router
         $collection = $this->routesCollection->getRoutes();
 
         $method = $_SERVER['REQUEST_METHOD'];
+        $requestUri = $_SERVER['SCRIPT_NAME'];
 
         foreach ($collection as $route) {
             if (!empty($route['methods']) && !in_array($method, $route['methods'])) {
@@ -40,13 +41,12 @@ class Router
 
 
             $pattern = '@^' . $pattern . '$@i';
-            $requestUri = $_SERVER['SCRIPT_NAME'];
 
             if (preg_match($pattern, $requestUri, $matches)) {
                 return new Result($route['handler'], array_filter($matches, '\is_string', ARRAY_FILTER_USE_KEY));
             }
         }
 
-        throw new RouteNotFoundException('Route not found');
+        throw new RouteNotFoundException('Route not found', $requestUri, $method);
     }
 }
