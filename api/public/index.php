@@ -13,20 +13,6 @@ error_reporting(E_ALL);
 
 $routesCollection = new RoutesCollection();
 
-$routesCollection->addRoute('/api/', function () {
-
-    return [
-        'data' => ['request' => 'GET /api']
-    ];
-}, ['GET']);
-
-$routesCollection->addRoute('/api/', function () {
-
-    return [
-        'data' => ['request' => 'POST /api']
-    ];
-}, ['POST']);
-
 $routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
 
 $routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET', 'POST'], ['id' => '\d']);
