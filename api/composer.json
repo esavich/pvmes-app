@@ -1,5 +1,11 @@
 {
     "require": {
         "mongodb/mongodb": "^1.4"
+    },
+    "autoload": {
+        "psr-4": {"App\\": "src/App/"}
+    },
+    "require-dev": {
+        "kint-php/kint": "^2.2"
     }
 }
