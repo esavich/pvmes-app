@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Handlers;
+namespace App\Actions;
 
 
 class PostsAction

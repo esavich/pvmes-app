@@ -1,8 +1,8 @@
 <?php
 
-use App\HandlerRunner\HandlerRunner;
-use App\Handlers\PostsAction;
-use App\Handlers\SinglePostAction;
+use App\ActionRunner\Runner;
+use App\Actions\PostsAction;
+use App\Actions\SinglePostAction;
 use App\Router\RoutesCollection;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
@@ -31,10 +31,10 @@ $routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET',
 
 $router = new \App\Router\Router($routesCollection);
 
-$handlerRunner = new HandlerRunner();
+$actionRunner = new Runner();
 try {
     $routeResult = $router->match();
-    $response = $handlerRunner->run($routeResult);
+    $response = $actionRunner->run($routeResult);
 } catch (\App\Router\RouteNotFoundException $e) {
     $response = [
         'status' => 'error',

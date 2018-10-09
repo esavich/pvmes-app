@@ -1,11 +1,11 @@
 <?php
 
-namespace App\HandlerRunner;
+namespace App\ActionRunner;
 
 
 use App\Router\Result;
 
-class HandlerRunner
+class Runner
 {
     public function run(Result $result)
     {
@@ -14,7 +14,7 @@ class HandlerRunner
             if (class_exists($handler)) {
                 $handler = [new $handler, 'run'];
             } else {
-                throw new HandlerNotFoundException();
+                throw new ActionNotFoundException();
             }
         }
         return call_user_func_array($handler, $result->getArgs());
