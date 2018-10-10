@@ -3,12 +3,16 @@
 namespace App\Actions;
 
 
+use App\Http\JsonResponse;
+
 class PostsAction
 {
-    public function run()
+    public function run(): JsonResponse
     {
-        return [
+        $responseBody = [
             'data' => ['request' => 'GET /api/posts']
         ];
+
+        return new JsonResponse($responseBody);
     }
 }

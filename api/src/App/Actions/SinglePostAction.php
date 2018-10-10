@@ -3,16 +3,19 @@
 namespace App\Actions;
 
 
+use App\Http\JsonResponse;
+
 class SinglePostAction
 {
-    function run($id)
+    function run($id): JsonResponse
     {
-
-        return [
+        $responseBody = [
             'data' => [
                 'request' => $_SERVER['REQUEST_METHOD'] . ' /api/posts',
                 'id' => $id
             ]
         ];
+
+        return new JsonResponse($responseBody);
     }
 }

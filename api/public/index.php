@@ -4,6 +4,8 @@ use App\ActionRunner\ActionNotFoundException;
 use App\ActionRunner\Runner;
 use App\Actions\PostsAction;
 use App\Actions\SinglePostAction;
+use App\Http\JsonResponse;
+use App\Http\ResponseSender;
 use App\Router\RouteNotFoundException;
 use App\Router\RoutesCollection;
 
@@ -24,7 +26,7 @@ try {
     $routeResult = $router->match();
     $response = $actionRunner->run($routeResult);
 } catch (RouteNotFoundException $e) {
-    $response = [
+    $responseBody = [
         'status' => 'error',
         'code' => '404',
         'data' => $e->getMessage(),
@@ -33,12 +35,19 @@ try {
             'method' => $e->getMethod()
         ]
     ];
+    $response = new JsonResponse($responseBody, '404', 'Not Found');
+
 } catch (ActionNotFoundException $e) {
-    $response = [
+    $responseBody = [
         'status' => 'error',
         'code' => '404',
         'data' => $e->getMessage(),
     ];
+    $response = new JsonResponse($responseBody, '404', 'Not Found');
 }
-header('Content-Type: application/json');
-echo json_encode($response);
+//$response->addHeader('test', 'test1');
+//$response->addHeader('test', 'test2');
+//$response->removeHeader('test');
+//$response->setStatus('500');
+ResponseSender::send($response);
+
