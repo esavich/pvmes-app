@@ -6,6 +6,7 @@
         "psr-4": {"App\\": "src/App/"}
     },
     "require-dev": {
-        "kint-php/kint": "^2.2"
+        "kint-php/kint": "^2.2",
+        "fzaninotto/faker": "^1.8"
     }
 }
