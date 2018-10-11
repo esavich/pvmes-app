@@ -13,6 +13,9 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 error_reporting(E_ALL);
 
+$config = include_once dirname(__DIR__) . '/config.php';
+App\Config\Config::load($config);
+
 $routesCollection = new RoutesCollection();
 
 $routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
