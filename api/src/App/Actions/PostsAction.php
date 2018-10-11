@@ -53,9 +53,9 @@ class PostsAction
             $postsData[] = PostProcessor::process($post);
         }
         $responseArr = [
-            'curPage' => $this->page,
-            'totalPageCount' => $totalPageCount,
-            'totalPosts' => $totalPosts,
+            'curPage' => (int)$this->page,
+            'totalPageCount' => (int)$totalPageCount,
+            'totalPosts' => (int)$totalPosts,
             'posts' => $postsData
         ];
 
