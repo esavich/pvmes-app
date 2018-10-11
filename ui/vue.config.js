@@ -4,9 +4,9 @@ module.exports = {
         port: 8081,
         proxy: {
             '/api': {
-                target: 'http://nginx:80/api',
+                target: 'http://nginx:80/',
                 changeOrigin: true
             }
         }
     }
-}
+};
