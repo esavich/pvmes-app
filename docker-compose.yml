@@ -23,7 +23,7 @@ services:
       context: ./docker/nginx
     image: esavich/pvmes-nginx:latest
     volumes:
-    - ./ui/dist:/var/www/ui/public
+    - ./ui:/var/www/ui
     - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
     - 8080:80
