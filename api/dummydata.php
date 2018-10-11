@@ -1,10 +1,18 @@
 <?php
+
+use App\Config\Config;
+
 require_once 'vendor/autoload.php';
+
+$config = include_once __DIR__ . '/config.php';
+Config::load($config);
+
 $generator = new \App\DummyDataGenerator();
 
-$mongoClient = new \MongoDB\Client('mongodb://mongo:27017');
+$mongoClient = new \MongoDB\Client(Config::get('mongoUrl'));
+$db = Config::get('db');
 
-$postsCollection = $mongoClient->pvmes->posts;
+$postsCollection = $mongoClient->$db->posts;
 
 $posts = $generator->generateNPosts(205);
 
