@@ -2,6 +2,7 @@
 
 use App\ActionRunner\ActionNotFoundException;
 use App\ActionRunner\Runner;
+use App\Actions\Exceptions\PostNotFoundException;
 use App\Actions\PostsAction;
 use App\Actions\SinglePostAction;
 use App\Http\JsonResponse;
@@ -20,7 +21,7 @@ $routesCollection = new RoutesCollection();
 
 $routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
 
-$routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET', 'POST'], ['id' => '\d']);
+$routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET', 'POST'], ['id' => '[\d\w]+']);
 
 $router = new \App\Router\Router($routesCollection);
 
@@ -40,7 +41,7 @@ try {
     ];
     $response = new JsonResponse($responseBody, '404', 'Not Found');
 
-} catch (ActionNotFoundException $e) {
+} catch (ActionNotFoundException | PostNotFoundException $e) {
     $responseBody = [
         'status' => 'error',
         'code' => '404',
