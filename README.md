@@ -9,6 +9,8 @@
 
 - используйте `docker-compose run --rm node yarn` для установки JS  зависимостей.
 
+- используйте `docker-compose run --rm php php dummydata.php` для установки заполнения базы тестовыми данными.
+
 ## Разработка
 
 - используйте `docker-compose run --rm php composer <команда>` для взаимодействия с composer.
@@ -30,6 +32,9 @@ use `docker-compose up` to run all services, app will be available at `http://lo
 - use `docker-compose run --rm php composer install` to install composer dependencies.
 
 - use `docker-compose run --rm node yarn` to install JS dependencies.
+
+- гыу `docker-compose run --rm php php dummydata.php` to fill database with test data.
+
 
 
 ## Development
