@@ -17,7 +17,7 @@
 
 - используйте `docker-compose run --rm -p 8081:8081 node yarn serve` для запуска dev-сервера vue с функцией горячей замены модулей и тд.
 
-- используйте `docker-compose run --rm -p 8081:8081 node yarn build` для создания готовой для production сборки.
+- используйте `docker-compose run --rm node yarn build` для создания готовой для production сборки.
  
 
 ---
@@ -33,7 +33,7 @@ use `docker-compose up` to run all services, app will be available at `http://lo
 
 - use `docker-compose run --rm node yarn` to install JS dependencies.
 
-- гыу `docker-compose run --rm php php dummydata.php` to fill database with test data.
+- use `docker-compose run --rm php php dummydata.php` to fill database with test data.
 
 
 
@@ -43,5 +43,5 @@ use `docker-compose up` to run all services, app will be available at `http://lo
 
 - use `docker-compose run --rm -p 8081:8081 node yarn serve` to start vue dev server with HMR, live reload, etc. 
 
-- use `docker-compose run --rm -p 8081:8081 node yarn build` to produce a production-ready bundle. 
+- use `docker-compose run --rm node yarn build` to produce a production-ready bundle. 
  
