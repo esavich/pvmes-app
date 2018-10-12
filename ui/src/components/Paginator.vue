@@ -19,20 +19,24 @@
         name: "Paginator",
         props: ['page', 'total', 'perPage'],
         computed: {
+            pagingLevel() {
+
+                return this.$route.name.replace('Paged', '');
+            },
             prev() {
                 if (this.page === 2) {
-                    return {name: 'home'}
+                    return {name: this.pagingLevel}
                 }
 
-                return {name: 'homePaged', params: {page: this.page - 1}}
+                return {name: this.pagingLevel + 'Paged', params: {page: this.page - 1}}
             },
             next() {
-                return {name: 'homePaged', params: {page: this.page + 1}}
+                return {name: this.pagingLevel + 'Paged', params: {page: this.page + 1}}
             }
         },
         methods: {
             getLink(n) {
-                return n === 1 ? {name: 'home'} : {name: 'homePaged', params: {page: n}}
+                return n === 1 ? {name: this.pagingLevel} : {name: this.pagingLevel + 'Paged', params: {page: n}}
             }
         }
     }

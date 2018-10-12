@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <Posts v-bind:initPage="page" v-bind:perPage="20"/>
+                <Posts v-bind:initPage="page" v-bind:perPage="20" v-bind:tag="tag"/>
 
             </div>
             <div class="col-md-4">
@@ -27,6 +27,9 @@
         computed: {
             page() {
                 return parseInt(this.$route.params.page) || 1;
+            },
+            tag() {
+                return this.$route.params.tag || false;
             }
         }
     }

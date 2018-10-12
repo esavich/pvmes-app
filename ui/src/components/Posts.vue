@@ -1,9 +1,11 @@
 <template>
     <div class="posts" v-show="loaded">
+        <h2 v-show="tag">Posts with tag: {{tag}}</h2>
         <div class="posts__list">
             <SinglePost v-for="post in posts" v-bind:post="post" v-bind:key="post._id" v-bind:showTitleLink="true"/>
         </div>
-        <Paginator v-bind:page="page" v-bind:total="totalPageCount" v-bind:perPage="postPerPage"/>
+        <Paginator v-if="totalPageCount > 1" v-bind:page="page" v-bind:total="totalPageCount"
+                   v-bind:perPage="postPerPage"/>
     </div>
 </template>
 
@@ -16,7 +18,8 @@
         name: "Posts",
         props: [
             'initPage',
-            'perPage'
+            'perPage',
+            'tag'
         ],
         components: {
             SinglePost,
@@ -26,12 +29,12 @@
             return {
                 posts: [],
                 loaded: false,
-                postPerPage: this.perPage || 10,
+
                 totalPosts: false
             }
         },
         created() {
-            this.loadPosts(this.offset, this.postPerPage);
+            this.loadPosts(this.offset, this.postPerPage, this.tag);
         },
         computed: {
             offset() {
@@ -42,13 +45,18 @@
             },
             totalPageCount() {
                 return Math.ceil(this.totalPosts / this.postPerPage);
+            },
+            postPerPage() {
+                return this.perPage || 10;
             }
         },
         methods: {
-            loadPosts(offset, limit) {
+            loadPosts(offset, limit, tag) {
                 let vm = this;
                 let url = '/api/posts/?limit=' + limit + '&skip=' + offset;
-
+                if (tag) {
+                    url += '&tag=' + tag;
+                }
                 vm.loaded = false;
 
                 axios.get(url)
@@ -62,7 +70,7 @@
         },
         watch: {
             '$route'() {
-                this.loadPosts(this.offset, this.postPerPage);
+                this.loadPosts(this.offset, this.postPerPage, this.tag);
             }
         }
     }
