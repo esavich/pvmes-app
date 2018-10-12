@@ -3,7 +3,7 @@
         <div class="posts__list">
             <SinglePost v-for="post in posts" v-bind:post="post" v-bind:key="post._id" v-bind:showTitleLink="true"/>
         </div>
-        <Paginator v-bind:page="page" v-bind:total="totalPageCount"/>
+        <Paginator v-bind:page="page" v-bind:total="totalPageCount" v-bind:perPage="postPerPage"/>
     </div>
 </template>
 
