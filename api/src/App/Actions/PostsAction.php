@@ -21,8 +21,9 @@ class PostsAction
     private $perPage;
     private $criteria = [];
     private $options = [];
-    private $page;
     private $collection;
+
+    private $skip;
 
     public function __construct()
     {
@@ -53,8 +54,6 @@ class PostsAction
             $postsData[] = PostProcessor::process($post);
         }
         $responseArr = [
-            'curPage' => (int)$this->page,
-            'totalPageCount' => (int)$totalPageCount,
             'totalPosts' => (int)$totalPosts,
             'posts' => $postsData
         ];
@@ -86,7 +85,9 @@ class PostsAction
      */
     public function getOptions(): array
     {
-        $this->page = $_GET['page'] ?? 1;
+        $this->limit = (int)($_GET['limit'] ?? $this->perPage);
+
+        $this->skip = (int)($_GET['skip'] ?? 0);
 
         if (isset($_GET['order']) && array_key_exists($_GET['order'], $this->allowedOrder)) {
             $order = $this->allowedOrder[$_GET['order']];
@@ -100,11 +101,10 @@ class PostsAction
             $orderBy = 'date';
         }
 
-        $skip = $this->perPage * ($this->page - 1);
         $options = [
-            'limit' => $this->perPage,
+            'limit' => $this->limit,
             'sort' => [$orderBy => $order],
-            'skip' => $skip
+            'skip' => $this->skip
         ];
 
         return $options;

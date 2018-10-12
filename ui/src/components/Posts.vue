@@ -15,7 +15,8 @@
     export default {
         name: "Posts",
         props: [
-            'initPage'
+            'initPage',
+            'perPage'
         ],
         components: {
             SinglePost,
@@ -25,35 +26,43 @@
             return {
                 posts: [],
                 loaded: false,
-                page: false,
-                totalPageCount: false,
+                postPerPage: this.perPage || 10,
+                totalPosts: false
             }
         },
         created() {
-            this.loadPosts(this.initPage);
+            this.loadPosts(this.offset, this.postPerPage);
+        },
+        computed: {
+            offset() {
+                return this.postPerPage * (this.initPage - 1);
+            },
+            page() {
+                return this.offset / this.postPerPage + 1;
+            },
+            totalPageCount() {
+                return Math.ceil(this.totalPosts / this.postPerPage);
+            }
         },
         methods: {
-            loadPosts(page) {
+            loadPosts(offset, limit) {
                 let vm = this;
-                let url = '/api/posts/';
+                let url = '/api/posts/?limit=' + limit + '&skip=' + offset;
 
                 vm.loaded = false;
-                if (page > 1) {
-                    url += '?page=' + page;
-                }
+
                 axios.get(url)
                     .then(function (response) {
                         vm.loaded = true;
                         vm.posts = response.data.posts;
-                        vm.page = response.data.curPage;
-                        vm.totalPageCount = response.data.totalPageCount;
+                        vm.totalPosts = response.data.totalPosts;
 
                     });
             }
         },
         watch: {
             '$route'() {
-                this.loadPosts(this.initPage);
+                this.loadPosts(this.offset, this.postPerPage);
             }
         }
     }
