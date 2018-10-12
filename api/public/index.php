@@ -21,7 +21,7 @@ $routesCollection = new RoutesCollection();
 
 $routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
 
-$routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET', 'POST'], ['id' => '[\d\w]+']);
+$routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET'], ['id' => '[\d\w]+']);
 
 $router = new \App\Router\Router($routesCollection);
 
