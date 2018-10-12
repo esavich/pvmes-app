@@ -5,6 +5,7 @@ use App\ActionRunner\Runner;
 use App\Actions\Exceptions\PostNotFoundException;
 use App\Actions\PostsAction;
 use App\Actions\SinglePostAction;
+use App\Actions\TagsAction;
 use App\Http\JsonResponse;
 use App\Http\ResponseSender;
 use App\Router\RouteNotFoundException;
@@ -18,6 +19,8 @@ $config = include_once dirname(__DIR__) . '/config.php';
 App\Config\Config::load($config);
 
 $routesCollection = new RoutesCollection();
+
+$routesCollection->addRoute('/api/tags/', TagsAction::class, ['GET']);
 
 $routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
 
