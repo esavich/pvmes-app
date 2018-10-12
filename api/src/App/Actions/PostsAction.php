@@ -53,13 +53,13 @@ class PostsAction
 
             $postsData[] = PostProcessor::process($post);
         }
-        $responseArr = [
+        $responseBody = [
             'totalPosts' => (int)$totalPosts,
             'posts' => $postsData
         ];
 
 
-        return new JsonResponse($responseArr);
+        return new JsonResponse($responseBody);
     }
 
     /**
