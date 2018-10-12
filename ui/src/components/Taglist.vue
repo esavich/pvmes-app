@@ -1,8 +1,13 @@
 <template>
     <div class="taglist">
-        <span class="tag badge badge-warning" v-for="tag in tags" v-bind:key="tag._id">
+        <router-link
+                v-bind:to="{name: 'tagged', params: {tag: tag._id}}"
+                class="tag badge badge-warning"
+                v-for="tag in tags"
+                v-bind:key="tag._id"
+        >
             {{tag._id}} ({{tag.count}})
-        </span>
+        </router-link>
     </div>
 </template>
 

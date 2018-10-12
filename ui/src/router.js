@@ -19,6 +19,18 @@ export default new Router({
         component: Home
     },
       {
+          path: '/tag/:tag',
+          name: 'tagged',
+          component: Home,
+          children: [
+              {
+                  path: 'page/:page',
+                  name: 'taggedPaged',
+                  component: Home
+              }
+          ]
+      },
+      {
           path: '/post/:id',
           name: 'post',
           component: Post
