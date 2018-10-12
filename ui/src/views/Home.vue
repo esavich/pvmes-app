@@ -6,7 +6,7 @@
 
             </div>
             <div class="col-md-4">
-                sidebar
+                <Sidebar/>
             </div>
         </div>
     </div>
@@ -16,11 +16,13 @@
     // @ is an alias to /src
     // import HelloWorld from '@/components/HelloWorld.vue';
     import Posts from '@/components/Posts.vue';
+    import Sidebar from '@/components/Sidebar.vue';
 
     export default {
         name: 'home',
         components: {
-            Posts
+            Posts,
+            Sidebar
         },
         computed: {
             page() {

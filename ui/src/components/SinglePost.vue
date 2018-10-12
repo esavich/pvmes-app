@@ -12,6 +12,7 @@
         </div>
         <hr>
         <Tags v-bind:tags="post.tags"/>
+        <div class="blog-post__rating">Rating: {{post.rating}}</div>
     </div>
 </template>
 
@@ -46,6 +47,11 @@
             &:hover {
                 text-decoration: none;
             }
+        }
+        &__rating {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #ccc;
         }
     }
 </style>
