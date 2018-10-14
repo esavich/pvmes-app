@@ -1,5 +1,5 @@
 <template>
-    <form method="post" @submit.prevent="validate">
+    <form method="post" @submit.prevent="validate" novalidate>
         <h3>Add your comment to post «{{post.title}}»</h3>
         <div class="alert alert-success" v-if="successSended">
             Comment added
