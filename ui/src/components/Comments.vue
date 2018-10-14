@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h3>Comments</h3>
+        <div class="row justify-content-between">
+            <h3 class="col-auto">Comments <span class="badge badge-light" v-if="count">{{count}}</span></h3>
+            <CommentSorter v-bind:order="sort" class="qwe col-auto" v-on:order="sortComments($event)" v-if="count > 1"/>
+        </div>
         <CommentsList v-if="loaded" v-bind:comments="comments"/>
         <CommentForm v-bind:post="post" v-on:added="loadComments(post._id)"/>
     </div>
@@ -10,17 +13,20 @@
     import axios from 'axios';
     import CommentsList from '@/components/CommentsList.vue';
     import CommentForm from '@/components/CommentForm.vue';
+    import CommentSorter from '@/components/CommentSorter.vue';
 
     export default {
         name: "Comments",
         components: {
             CommentForm,
-            CommentsList
+            CommentsList,
+            CommentSorter
         },
         data() {
             return {
                 comments: [],
-                loaded: false
+                loaded: false,
+                sort: -1
             }
         },
         props: [
@@ -45,6 +51,9 @@
                         vm.loaded = true;
                         vm.comments = response.data.comments;
                     });
+            },
+            sortComments(order) {
+                this.comments.sort((a, b) => (a.date > b.date) ? order : ((b.date > a.date) ? -order : 0))
             }
         },
     }
