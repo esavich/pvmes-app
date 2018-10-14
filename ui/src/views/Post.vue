@@ -2,17 +2,20 @@
     <div class="container">
         <router-link v-bind:to="{name:'home'}">Home</router-link>
         <SinglePost v-show="loaded" v-bind:post="post"></SinglePost>
+        <Comments v-if="loaded" v-bind:post="post"/>
     </div>
 </template>
 
 <script>
     import SinglePost from '@/components/SinglePost.vue';
+    import Comments from '@/components/Comments.vue';
     import axios from 'axios';
 
     export default {
         name: 'Post',
         components: {
-            SinglePost
+            SinglePost,
+            Comments
         },
         data() {
             return {
