@@ -3,7 +3,7 @@
         <button
                 type="button"
                 class="btn btn-sm "
-                v-bind:class="[sortOrder === -1 ? ['btn-primary', 'disabled'] : 'btn-outline-primary']"
+                v-bind:class="[sortOrder === -1 ? 'btn-primary' : 'btn-outline-primary']"
                 v-on:click="setSort(-1)"
         >
             New first
@@ -11,7 +11,7 @@
         <button
                 type="button"
                 class="btn btn-sm"
-                v-bind:class="[sortOrder === 1 ? ['btn-primary', 'disabled'] : 'btn-outline-primary']"
+                v-bind:class="[sortOrder === 1 ? 'btn-primary' : 'btn-outline-primary']"
                 v-on:click="setSort(1)"
 
         >
