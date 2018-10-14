@@ -4,7 +4,8 @@
             <li class="page-item" v-bind:class="{disabled : page === 1}">
                 <router-link class="page-link page-link--edge" v-bind:to="prev">Previous</router-link>
             </li>
-            <li v-for="n in total " class="page-item" v-bind:key="n" v-bind:class="{ active : page === n}">
+            <li v-for="n in total " class="page-item d-none d-lg-inline-block" v-bind:key="n"
+                v-bind:class="{ active : page === n}">
                 <router-link class="page-link" v-bind:to="getLink(n)">{{n}}</router-link>
             </li>
             <li class="page-item" v-bind:class="{disabled : page === total}">
