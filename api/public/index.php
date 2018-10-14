@@ -2,7 +2,9 @@
 
 use App\ActionRunner\ActionNotFoundException;
 use App\ActionRunner\Runner;
+use App\Actions\AddCommentAction;
 use App\Actions\Exceptions\PostNotFoundException;
+use App\Actions\ListCommentAction;
 use App\Actions\PostsAction;
 use App\Actions\SinglePostAction;
 use App\Actions\TagsAction;
@@ -21,6 +23,8 @@ App\Config\Config::load($config);
 $routesCollection = new RoutesCollection();
 
 $routesCollection->addRoute('/api/tags/', TagsAction::class, ['GET']);
+$routesCollection->addRoute('/api/comments/', ListCommentAction::class, ['GET']);
+$routesCollection->addRoute('/api/comments/', AddCommentAction::class, ['POST']);
 
 $routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
 
