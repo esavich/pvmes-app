@@ -17,5 +17,9 @@
 
 <style lang="scss">
   @import "~bootstrap/scss/bootstrap";
+  @import "assets/colors";
 
+  body {
+      color: $main-gray;
+  }
 </style>

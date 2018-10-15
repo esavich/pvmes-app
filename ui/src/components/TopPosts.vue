@@ -1,7 +1,8 @@
 <template>
     <ul class="top-posts">
         <li v-for="post in posts" v-bind:key="post._id">
-            <router-link v-bind:to="{name:'post', params: {id: post._id}}">{{post.title}}</router-link>
+            <router-link v-bind:to="{name:'post', params: {id: post._id}}" class="top-posts__link">{{post.title}}
+            </router-link>
             ({{post.rating}})
         </li>
     </ul>
@@ -41,6 +42,12 @@
 
 </script>
 
-<style>
+<style lang="scss">
+    @import "../assets/mixins";
 
+    .top-posts {
+        &__link {
+            @include underlined;
+        }
+    }
 </style>

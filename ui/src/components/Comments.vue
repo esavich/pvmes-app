@@ -60,12 +60,13 @@
 </script>
 
 <style lang="scss">
+    @import "../assets/colors";
     .comments__item {
         margin-bottom: 20px;
     }
 
     .comment {
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid $light-gray;
         padding: 10px;
     }
 </style>

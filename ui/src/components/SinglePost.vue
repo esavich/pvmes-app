@@ -37,21 +37,19 @@
 </script>
 
 <style lang="scss">
+    @import "../assets/colors";
+    @import "../assets/mixins";
     .blog-post {
-        border: 1px solid #ccc;
+        border: 1px solid $light-gray;
         padding: 10px;
         margin-bottom: 10px;
         &__title a {
-            color: #ccc;
-            text-decoration: underline;
-            &:hover {
-                text-decoration: none;
-            }
+            @include underlined;
         }
         &__rating {
             margin-top: 10px;
             font-size: 12px;
-            color: #ccc;
+            color: $light-gray;
         }
     }
 </style>

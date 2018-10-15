@@ -21,7 +21,6 @@
 
 <style>
     .tag {
-        display: inline-block;
         margin: 0 10px;
     }
 </style>
