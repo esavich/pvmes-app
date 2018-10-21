@@ -3,6 +3,8 @@
 namespace App\Router;
 
 
+use App\Http\Request;
+
 class Router
 {
     private $routesCollection;
@@ -17,15 +19,16 @@ class Router
     }
 
     /**
+     * @param Request $request
      * @return Result
      * @throws RouteNotFoundException
      */
-    public function match()
+    public function match(Request $request)
     {
         $collection = $this->routesCollection->getRoutes();
 
-        $method = $_SERVER['REQUEST_METHOD'];
-        $requestUri = $_SERVER['SCRIPT_NAME'];
+        $method = $request->getMethod();
+        $requestUri = $request->getUrlPart('path');
 
         foreach ($collection as $route) {
             if (!empty($route['methods']) && !in_array($method, $route['methods'])) {

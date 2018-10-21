@@ -3,20 +3,31 @@
 namespace App\ActionRunner;
 
 
-use App\Router\Result;
+use App\Http\Request;
 
 class Runner
 {
-    public function run(Result $result)
+    /**
+     * @var Request
+     */
+    private $request;
+
+    public function __construct(Request $request)
     {
-        $handler = $result->getHandler();
-        if (!is_callable($handler) && is_string($handler)) {
-            if (class_exists($handler)) {
-                $handler = [new $handler, 'run'];
-            } else {
-                throw new ActionNotFoundException('action ' . $handler . ' not found');
-            }
+        $this->request = $request;
+    }
+
+    public function run($handler)
+    {
+        if (is_callable($handler)) {
+            return $handler($this->request);
         }
-        return call_user_func_array($handler, $result->getArgs());
+
+        if (is_string($handler) && class_exists($handler)) {
+            $handler = new $handler;
+            return $handler->run($this->request);
+        }
+
+        throw new ActionNotFoundException('action not found');
     }
 }

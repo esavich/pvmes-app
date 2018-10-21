@@ -35,10 +35,13 @@ $request = RequestFactory::createFromGlobals();
 
 $router = new \App\Router\Router($routesCollection);
 
-$actionRunner = new Runner();
+$actionRunner = new Runner($request);
 try {
-    $routeResult = $router->match();
-    $response = $actionRunner->run($routeResult);
+    $routeResult = $router->match($request);
+    foreach ($routeResult->getArgs() as $argKey => $argVal) {
+        $request->addAttribute($argKey, $argVal);
+    }
+    $response = $actionRunner->run($routeResult->getHandler());
 } catch (RouteNotFoundException $e) {
     $responseBody = [
         'status' => 'error',
