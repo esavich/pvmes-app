@@ -36,18 +36,16 @@ class SinglePostAction implements ActionInterface
         $post = $this->collection->findOne(
             ['_id' => new ObjectId($request->getAttribute('id'))]
         );
+
         if ($post) {
             $post = PostProcessor::process($post);
             $responseBody = [
                 'post' => $post
             ];
-            $statusCode = 200;
-            $statusText = 'OK';
 
-        } else {
-            throw new Exceptions\PostNotFoundException('Post not found');
+            return new JsonResponse($responseBody, 200, 'OK');
         }
 
-        return new JsonResponse($responseBody, $statusCode, $statusText);
+        throw new Exceptions\PostNotFoundException('Post not found');
     }
 }
