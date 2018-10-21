@@ -9,6 +9,7 @@ use App\Actions\PostsAction;
 use App\Actions\SinglePostAction;
 use App\Actions\TagsAction;
 use App\Http\JsonResponse;
+use App\Http\RequestFactory;
 use App\Http\ResponseSender;
 use App\Router\RouteNotFoundException;
 use App\Router\RoutesCollection;
@@ -29,6 +30,8 @@ $routesCollection->addRoute('/api/comments/', AddCommentAction::class, ['POST'])
 $routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
 
 $routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET'], ['id' => '[\d\w]+']);
+
+$request = RequestFactory::createFromGlobals();
 
 $router = new \App\Router\Router($routesCollection);
 
