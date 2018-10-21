@@ -47,9 +47,6 @@ try {
     ];
     $response = new JsonResponse($responseBody, '404', 'Not Found');
 }
-//$response->addHeader('test', 'test1');
-//$response->addHeader('test', 'test2');
-//$response->removeHeader('test');
-//$response->setStatus('500');
+
 ResponseSender::send($response);
 
