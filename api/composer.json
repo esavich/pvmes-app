@@ -7,6 +7,7 @@
     },
     "require-dev": {
         "kint-php/kint": "^2.2",
-        "fzaninotto/faker": "^1.8"
+        "fzaninotto/faker": "^1.8",
+        "phpunit/phpunit": "^7.4"
     }
 }
