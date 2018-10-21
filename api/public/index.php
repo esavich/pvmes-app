@@ -2,17 +2,11 @@
 
 use App\ActionRunner\ActionNotFoundException;
 use App\ActionRunner\Runner;
-use App\Actions\AddCommentAction;
 use App\Actions\Exceptions\PostNotFoundException;
-use App\Actions\ListCommentAction;
-use App\Actions\PostsAction;
-use App\Actions\SinglePostAction;
-use App\Actions\TagsAction;
 use App\Http\JsonResponse;
 use App\Http\RequestFactory;
 use App\Http\ResponseSender;
 use App\Router\RouteNotFoundException;
-use App\Router\RoutesCollection;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -21,19 +15,10 @@ error_reporting(E_ALL);
 $config = include_once dirname(__DIR__) . '/config.php';
 App\Config\Config::load($config);
 
-$routesCollection = new RoutesCollection();
 
-$routesCollection->addRoute('/api/tags/', TagsAction::class, ['GET']);
-$routesCollection->addRoute('/api/comments/', ListCommentAction::class, ['GET']);
-$routesCollection->addRoute('/api/comments/', AddCommentAction::class, ['POST']);
-
-$routesCollection->addRoute('/api/posts/', PostsAction::class, ['GET']);
-
-$routesCollection->addRoute('/api/posts/{id}/', SinglePostAction::class, ['GET'], ['id' => '[\d\w]+']);
+$router = include_once dirname(__DIR__) . '/routes.php';
 
 $request = RequestFactory::createFromGlobals();
-
-$router = new \App\Router\Router($routesCollection);
 
 $actionRunner = new Runner($request);
 try {
