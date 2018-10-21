@@ -6,9 +6,10 @@ namespace App\Actions;
 use App\Config\Config;
 use App\Helpers\PostProcessor;
 use App\Http\JsonResponse;
+use App\Http\Request;
 use MongoDB\Client;
 
-class PostsAction
+class PostsAction implements ActionInterface
 {
     private $allowedOrderBy = [
         'rating',
@@ -24,6 +25,10 @@ class PostsAction
     private $collection;
 
     private $skip;
+    /**
+     * @var Request
+     */
+    private $request;
 
     public function __construct()
     {
@@ -33,15 +38,18 @@ class PostsAction
         $this->perPage = Config::get('postsPerPage', 20);
     }
 
-    public function run(): JsonResponse
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function run(Request $request): JsonResponse
     {
-
+        $this->request = $request;
         $this->criteria = $this->getCriteria();
         $this->options = $this->getOptions();
 
 
         $totalPosts = $this->collection->countDocuments($this->criteria);
-        $totalPageCount = ceil($totalPosts / $this->perPage);
         $posts = $this->collection->find(
             $this->criteria,
             $this->options
@@ -69,11 +77,11 @@ class PostsAction
     {
         $criteria = [];
 
-        if (isset($_GET['tag'])) {
-            if (is_array($_GET['tag'])) {
-                $criteria['tags'] = ['$all' => $_GET['tag']];
+        if ($this->request->getParam('tag')) {
+            if (is_array($this->request->getParam('tag'))) {
+                $criteria['tags'] = ['$all' => $this->request->getParam('tag')];
             } else {
-                $criteria['tags'] = $_GET['tag'];
+                $criteria['tags'] = $this->request->getParam('tag');
             }
         }
 
@@ -85,18 +93,18 @@ class PostsAction
      */
     public function getOptions(): array
     {
-        $this->limit = (int)($_GET['limit'] ?? $this->perPage);
+        $this->limit = (int)($this->request->getParam('limit') ?? $this->perPage);
 
-        $this->skip = (int)($_GET['skip'] ?? 0);
+        $this->skip = (int)($this->request->getParam('skip') ?? 0);
 
-        if (isset($_GET['order']) && array_key_exists($_GET['order'], $this->allowedOrder)) {
-            $order = $this->allowedOrder[$_GET['order']];
+        if ($this->request->getParam('order') && array_key_exists($this->request->getParam('order'), $this->allowedOrder)) {
+            $order = $this->allowedOrder[$this->request->getParam('order')];
         } else {
             $order = -1;
         }
 
-        if (isset($_GET['orderBy']) && in_array($_GET['orderBy'], $this->allowedOrderBy)) {
-            $orderBy = $_GET['orderBy'];
+        if ($this->request->getParam('orderBy') && in_array($this->request->getParam('orderBy'), $this->allowedOrderBy)) {
+            $orderBy = $this->request->getParam('orderBy');
         } else {
             $orderBy = 'date';
         }

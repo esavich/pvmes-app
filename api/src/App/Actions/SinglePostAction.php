@@ -6,11 +6,12 @@ namespace App\Actions;
 use App\Config\Config;
 use App\Helpers\PostProcessor;
 use App\Http\JsonResponse;
+use App\Http\Request;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Client;
 use MongoDB\Collection;
 
-class SinglePostAction
+class SinglePostAction implements ActionInterface
 {
     /**
      * @var Collection
@@ -25,14 +26,15 @@ class SinglePostAction
     }
 
     /**
-     * @param $id
+     *
+     * @param Request $request
      * @return JsonResponse
      * @throws Exceptions\PostNotFoundException
      */
-    function run($id): JsonResponse
+    function run(Request $request): JsonResponse
     {
         $post = $this->collection->findOne(
-            ['_id' => new ObjectId($id)]
+            ['_id' => new ObjectId($request->getAttribute('id'))]
         );
         if ($post) {
             $post = PostProcessor::process($post);

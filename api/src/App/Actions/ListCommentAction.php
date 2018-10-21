@@ -6,11 +6,12 @@ namespace App\Actions;
 use App\Config\Config;
 use App\Helpers\CommentProcessor;
 use App\Http\JsonResponse;
+use App\Http\Request;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Client;
 
 
-class ListCommentAction
+class ListCommentAction implements ActionInterface
 {
     /**
      * @var \MongoDB\Collection
@@ -18,6 +19,10 @@ class ListCommentAction
     private $collection;
     private $criteria = [];
     private $options = [];
+    /**
+     * @var Request
+     */
+    private $request;
 
     public function __construct()
     {
@@ -27,10 +32,12 @@ class ListCommentAction
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      */
-    public function run(): JsonResponse
+    public function run(Request $request): JsonResponse
     {
+        $this->request = $request;
         $this->criteria = $this->getCriteria();
         $this->options = $this->getOptions();
 
@@ -58,8 +65,8 @@ class ListCommentAction
     {
         $criteria = [];
 
-        if (isset($_GET['postId'])) {
-            $criteria['postId'] = new ObjectId($_GET['postId']);
+        if ($this->request->getParam('postId')) {
+            $criteria['postId'] = new ObjectId($this->request->getParam('postId'));
         }
 
         return $criteria;

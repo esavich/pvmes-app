@@ -5,17 +5,22 @@ namespace App\Actions;
 
 use App\Config\Config;
 use App\Http\JsonResponse;
+use App\Http\Request;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
 
 
-class AddCommentAction
+class AddCommentAction implements ActionInterface
 {
     /**
      * @var \MongoDB\Collection
      */
     private $collection;
+    /**
+     * @var Request
+     */
+    private $request;
 
 
     public function __construct()
@@ -26,20 +31,22 @@ class AddCommentAction
     }
 
     /**
+     * @param Request $request
      * @return JsonResponse
      */
-    public function run(): JsonResponse
+    public function run(Request $request): JsonResponse
     {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $this->request = $request;
 
-        $data = array_map('trim', $data);
+        $this->trimRequestData();
+
         $responseBody = [];
-        if ($this->validate($data)) {
+        if ($this->validate()) {
             $this->collection->insertOne([
-                'postId' => new ObjectId($data['postId']),
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'comment' => $data['comment'],
+                'postId' => new ObjectId($this->request->getPost('postId')),
+                'name' => $this->request->getPost('name'),
+                'email' => $this->request->getPost('email'),
+                'comment' => $this->request->getPost('comment'),
                 'date' => new UTCDateTime()
             ]);
             $responseBody['status'] = 'success';
@@ -49,21 +56,31 @@ class AddCommentAction
         return new JsonResponse($responseBody);
     }
 
+    private function trimRequestData()
+    {
+        $body = $this->request->getBody();
+        $res = array_walk_recursive($body, function (&$item) {
+            $item = trim($item);
+        });
+
+        $this->request->setBody($body);
+
+    }
+
     /**
-     * @param $data
      * @return bool
      */
-    private function validate($data): bool
+    private function validate(): bool
     {
         if (
-            isset($data['name'])
-            && is_string($data['name'])
-            && isset($data['email'])
-            && filter_var($data['email'], FILTER_VALIDATE_EMAIL)
-            && isset($data['comment'])
-            && is_string($data['comment'])
-            && isset($data['postId'])
-            && is_string($data['postId'])
+            $this->request->getPost('name')
+            && is_string($this->request->getPost('name'))
+            && $this->request->getPost('email')
+            && filter_var($this->request->getPost('email'), FILTER_VALIDATE_EMAIL)
+            && $this->request->getPost('comment')
+            && is_string($this->request->getPost('comment'))
+            && $this->request->getPost('postId')
+            && is_string($this->request->getPost('postId'))
         ) {
             return true;
         }
