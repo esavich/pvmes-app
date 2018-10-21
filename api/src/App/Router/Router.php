@@ -35,7 +35,11 @@ class Router
                 continue;
             }
 
-
+            /*
+                Если роут содержит токен (например {id} в /api/posts/{id}/)
+                то формируем регулярку, с учетом заданной для токена регулярки
+                (задается 4-м параметром при создании роута, например ['id' => '[\d\w]+'])
+            */
             $pattern = preg_replace_callback('@\{([^\}]+)\}@', function ($matches) use ($route) {
                 $arg = $matches[1];
                 $replace = $route['tokens'][$arg] ?? '[^}]+';
@@ -45,7 +49,9 @@ class Router
 
             $pattern = '@^' . $pattern . '$@i';
 
+            //проверяем полученную регулярку
             if (preg_match($pattern, $requestUri, $matches)) {
+                //если в $matches есть токены (их ключи будут string) то выносим в args
                 return new Result($route['handler'], array_filter($matches, '\is_string', ARRAY_FILTER_USE_KEY));
             }
         }
