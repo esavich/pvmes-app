@@ -22,6 +22,17 @@ class RouterTest extends TestCase
         $request = new Request([], [], '/api/test/');
         $result = $this->router->match($request);
         $this->assertInstanceOf(Result::class, $result);
+        $this->assertEquals(TestAction::class, $result->getHandler());
+    }
+
+    public function testMatchValidWithAttributes()
+    {
+        $request = new Request([], [], '/api/testattribute/123');
+        $request->setMethod('POST');
+        $result = $this->router->match($request);
+        $this->assertInstanceOf(Result::class, $result);
+        $this->assertEquals(TestAction::class, $result->getHandler());
+        $this->assertEquals(['id' => 123], $result->getArgs());
     }
 
     public function testMatchInvalidPath()
@@ -42,8 +53,8 @@ class RouterTest extends TestCase
     protected function setUp()
     {
         $routesCollection = new RoutesCollection();
-        $routesCollection->addRoute('/api/test/', function () {
-        }, ['GET']);
+        $routesCollection->addRoute('/api/test/', TestAction::class, ['GET']);
+        $routesCollection->addRoute('/api/testattribute/{id}', TestAction::class, ['POST'], ['id' => '\d+']);
         $this->router = new Router($routesCollection);
     }
 }
