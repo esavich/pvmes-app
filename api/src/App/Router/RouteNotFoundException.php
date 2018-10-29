@@ -2,7 +2,6 @@
 
 namespace App\Router;
 
-
 class RouteNotFoundException extends \Exception
 {
     private $uri;

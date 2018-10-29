@@ -2,7 +2,6 @@
 
 namespace App\Actions\Exceptions;
 
-
 class PostNotFoundException extends \Exception
 {
 

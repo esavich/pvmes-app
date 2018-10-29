@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-
 class ResponseSender
 {
     public static function send(Response $response): void

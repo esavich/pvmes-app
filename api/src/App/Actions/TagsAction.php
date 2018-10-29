@@ -2,7 +2,6 @@
 
 namespace App\Actions;
 
-
 use App\Config\Config;
 use App\Http\JsonResponse;
 use App\Http\Request;
@@ -22,7 +21,7 @@ class TagsAction implements ActionInterface
         $this->collection = $mongoClient->$db->posts;
     }
 
-    function run(Request $request): JsonResponse
+    public function run(Request $request): JsonResponse
     {
         $tags = $this->collection->aggregate([
             ['$unwind' => '$tags'],

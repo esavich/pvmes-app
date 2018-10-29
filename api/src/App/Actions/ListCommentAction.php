@@ -2,14 +2,12 @@
 
 namespace App\Actions;
 
-
 use App\Config\Config;
 use App\Helpers\CommentProcessor;
 use App\Http\JsonResponse;
 use App\Http\Request;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Client;
-
 
 class ListCommentAction implements ActionInterface
 {

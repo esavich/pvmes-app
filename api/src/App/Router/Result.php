@@ -2,7 +2,6 @@
 
 namespace App\Router;
 
-
 class Result
 {
     private $handler;

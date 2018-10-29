@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-
 class CommentProcessor
 {
     public static function process($post)

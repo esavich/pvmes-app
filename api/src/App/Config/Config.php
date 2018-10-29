@@ -2,7 +2,6 @@
 
 namespace App\Config;
 
-
 class Config
 {
     public static $config = [];

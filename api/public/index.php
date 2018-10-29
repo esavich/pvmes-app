@@ -44,7 +44,6 @@ try { //пробуем найти роут
         ]
     ];
     $response = new JsonResponse($responseBody, '404', 'Not Found');
-
 } catch (ActionNotFoundException | PostNotFoundException $e) { //экшен не найден или пост не найден
     $responseBody = [
         'status' => 'error',
@@ -55,4 +54,3 @@ try { //пробуем найти роут
 }
 //отправляем ответ
 ResponseSender::send($response);
-

@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-
 /**
  * Class Request
  * @package App\Http

@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-
 class Response
 {
     const STATUS = [
@@ -41,7 +40,6 @@ class Response
      */
     public function __construct($body, $statusCode = 200, $statusText = 'OK')
     {
-
         $this->body = $body;
         $this->statusCode = $statusCode;
         $this->statusText = $statusText;

@@ -2,7 +2,6 @@
 
 namespace App\Router;
 
-
 use App\Http\Request;
 
 class Router

@@ -8,5 +8,5 @@ use App\Http\Request;
 
 interface ActionInterface
 {
-    function run(Request $request): JsonResponse;
+    public function run(Request $request): JsonResponse;
 }

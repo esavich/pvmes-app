@@ -2,7 +2,6 @@
 
 namespace App\Actions;
 
-
 use App\Config\Config;
 use App\Helpers\PostProcessor;
 use App\Http\JsonResponse;
@@ -58,7 +57,6 @@ class PostsAction implements ActionInterface
         $postsData = [];
 
         foreach ($posts as $post) {
-
             $postsData[] = PostProcessor::process($post);
         }
         $responseBody = [

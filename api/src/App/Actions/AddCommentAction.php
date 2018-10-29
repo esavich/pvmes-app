@@ -2,14 +2,12 @@
 
 namespace App\Actions;
 
-
 use App\Config\Config;
 use App\Http\JsonResponse;
 use App\Http\Request;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
-
 
 class AddCommentAction implements ActionInterface
 {
@@ -64,7 +62,6 @@ class AddCommentAction implements ActionInterface
         });
 
         $this->request->setBody($body);
-
     }
 
     /**

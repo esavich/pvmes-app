@@ -2,7 +2,6 @@
 
 namespace App\Http;
 
-
 class RequestFactory
 {
     public static function createFromGlobals(array $server = null, array $query = null, array $body = null): Request
@@ -67,5 +66,4 @@ class RequestFactory
 
         return [];
     }
-
 }

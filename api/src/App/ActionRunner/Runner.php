@@ -2,7 +2,6 @@
 
 namespace App\ActionRunner;
 
-
 use App\Http\Request;
 
 class Runner

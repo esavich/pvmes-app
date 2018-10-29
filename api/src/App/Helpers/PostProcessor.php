@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-
 class PostProcessor
 {
     public static function process($post)

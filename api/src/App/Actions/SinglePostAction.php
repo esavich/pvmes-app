@@ -2,7 +2,6 @@
 
 namespace App\Actions;
 
-
 use App\Config\Config;
 use App\Helpers\PostProcessor;
 use App\Http\JsonResponse;
@@ -31,7 +30,7 @@ class SinglePostAction implements ActionInterface
      * @return JsonResponse
      * @throws Exceptions\PostNotFoundException
      */
-    function run(Request $request): JsonResponse
+    public function run(Request $request): JsonResponse
     {
         $post = $this->collection->findOne(
             ['_id' => new ObjectId($request->getAttribute('id'))]

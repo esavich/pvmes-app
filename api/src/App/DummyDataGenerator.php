@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 use Faker\Factory;
 
 class DummyDataGenerator

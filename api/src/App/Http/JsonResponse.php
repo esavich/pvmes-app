@@ -3,7 +3,6 @@
 
 namespace App\Http;
 
-
 class JsonResponse extends Response
 {
 
