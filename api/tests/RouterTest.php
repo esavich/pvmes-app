@@ -17,6 +17,14 @@ class RouterTest extends TestCase
      */
     private $router;
 
+    protected function setUp()
+    {
+        $routesCollection = new RoutesCollection();
+        $routesCollection->addRoute('/api/test/', TestAction::class, ['GET']);
+        $routesCollection->addRoute('/api/testattribute/{id}', TestAction::class, ['POST'], ['id' => '\d+']);
+        $this->router = new Router($routesCollection);
+    }
+    
     public function testMatchValid()
     {
         $request = new Request([], [], '/api/test/');
@@ -48,13 +56,5 @@ class RouterTest extends TestCase
         $request = new Request([], [], '/api/test/');
         $request->setMethod('POST');
         $result = $this->router->match($request);
-    }
-
-    protected function setUp()
-    {
-        $routesCollection = new RoutesCollection();
-        $routesCollection->addRoute('/api/test/', TestAction::class, ['GET']);
-        $routesCollection->addRoute('/api/testattribute/{id}', TestAction::class, ['POST'], ['id' => '\d+']);
-        $this->router = new Router($routesCollection);
     }
 }
