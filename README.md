@@ -1,5 +1,5 @@
 # pvmes-app
-Блог на php, vue.js, mongodb и elasticsearch.
+Блог на php, vue.js, mongodb.
 
 ## Запуск
 `docker-compose up` запустит все необходимые сервисы, приложение будет доступно по адресу `http://localhost:8080/`.
